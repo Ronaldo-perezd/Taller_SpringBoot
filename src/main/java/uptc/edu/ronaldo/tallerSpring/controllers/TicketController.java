@@ -38,6 +38,8 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
+
+
         User assignedUser = userService.getById(ticket.getAssignedUser().getId());
         if (assignedUser == null) {
             return ResponseEntity.badRequest().build();

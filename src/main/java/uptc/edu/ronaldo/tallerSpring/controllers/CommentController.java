@@ -27,20 +27,19 @@ public class CommentController {
         return ResponseEntity.ok(comments);
     }
 
-    @GetMapping("/ticket/{ticketId}")
-    public ResponseEntity<List<Comment>> getCommentsByTicketId(@PathVariable Long ticketId) {
+    @GetMapping("/ticket/{ticketId}/comments")
+    public ResponseEntity<Object> getCommentsByTicketId(@PathVariable Long ticketId) {
         List<Comment> comments = commentService.readComments(ticketId);
-        return ResponseEntity.ok(comments);
+        if (comments.isEmpty()) {
+            return ResponseEntity.ok().body("No hay comentarios para este ticket.");
+        } else {
+            return ResponseEntity.ok().body(comments);
+        }
     }
 
     @PostMapping
     public ResponseEntity<Void> createComment(@RequestBody Comment comment) {
         commentService.addComment(comment);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

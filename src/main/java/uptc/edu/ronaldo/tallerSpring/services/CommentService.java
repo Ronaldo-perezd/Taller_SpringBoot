@@ -1,5 +1,6 @@
 package uptc.edu.ronaldo.tallerSpring.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uptc.edu.ronaldo.tallerSpring.entities.Comment;
@@ -13,11 +14,10 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     public void updateComment(Long commentId, String newContent) {
-        Comment comment = commentRepository.findById(commentId).orElse(null);
-        if (comment != null) {
-            comment.setContent(newContent);
-            commentRepository.save(comment);
-        }
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("Comentario no encontrado con el ID: " + commentId));
+        comment.setContent(newContent);
+        commentRepository.save(comment);
     }
 
     public List<Comment> readComments(Long ticketId) {
