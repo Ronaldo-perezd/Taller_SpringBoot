@@ -15,6 +15,7 @@ public class Ticket {
     private String description;
     private String status;
 
+    //Asociaciones uno a uno, Muchos a Muchos, uno a Muchos, etc.
     @ManyToOne
     @JoinColumn(name = "assignedUserId")
     private User assignedUser;
@@ -68,21 +69,4 @@ public class Ticket {
     public void setAssignedUser(User assignedUser) {
         this.assignedUser = assignedUser;
     }
-
-    // Métodos específicos del modelo (lógica de negocio)
-    /*public Ticket readTicket(Long ticketId) {
-        // Lógica para leer un ticket de la base de datos
-        // Implementa la lógica según tu base de datos y sistema de persistencia
-        return null;
-    }
-
-    public void addTicket(Ticket ticket) {
-        // Lógica para agregar un nuevo ticket a la base de datos
-        // Implementa la lógica según tu base de datos y sistema de persistencia
-    }
-
-    public void closeTicket(Long ticketId) {
-        // Lógica para cerrar un ticket en la base de datos
-        // Implementa la lógica según tu base de datos y sistema de persistencia
-    }*/
 }

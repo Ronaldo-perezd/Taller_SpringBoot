@@ -27,4 +27,8 @@ public class TicketService {
             ticketRepository.save(ticket);
         }
     }
+
+    public List<Ticket> getAllTickets() {
+        return ticketRepository.findAll();
+    }
 }

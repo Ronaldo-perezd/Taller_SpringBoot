@@ -9,6 +9,8 @@ import uptc.edu.ronaldo.tallerSpring.entities.User;
 import uptc.edu.ronaldo.tallerSpring.services.TicketService;
 import uptc.edu.ronaldo.tallerSpring.services.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tickets")
 public class TicketController {
@@ -17,6 +19,12 @@ public class TicketController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping
+    public List<Ticket> getAllTickets() {
+        List<Ticket> tickets = ticketService.getAllTickets();
+        return tickets;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
@@ -30,16 +38,12 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
-        User assignedUser = userService.getById(ticket.getAssignedUser().getId()); // Obtener el usuario asignado desde el ticket directamente
-
+        User assignedUser = userService.getById(ticket.getAssignedUser().getId());
         if (assignedUser == null) {
             return ResponseEntity.badRequest().build();
         }
-
         ticket.setAssignedUser(assignedUser);
-
         ticketService.addTicket(ticket);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
 

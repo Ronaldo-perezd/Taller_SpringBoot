@@ -5,13 +5,15 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String email;
+
+    //Asociaciones uno a uno, Muchos a Muchos, uno a Muchos, etc.
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL)
     private List<Ticket> assignedTickets;
 
@@ -19,9 +21,7 @@ public class User {
     private List<Comment> comments;
 
     // Constructores, getters y setters
-
     public User() {
-        // Constructor vacío necesario para JPA
     }
 
     public User(String username, String email) {
@@ -48,16 +48,4 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    /* Métodos específicos del modelo (lógica de negocio)
-    public List<User> readUsers() {
-        // Lógica para leer todos los usuarios de la base de datos
-        // Implementa la lógica según tu base de datos y sistema de persistencia
-        return null;
-    }
-
-    public void addUser(User user) {
-        // Lógica para agregar un nuevo usuario a la base de datos
-        // Implementa la lógica según tu base de datos y sistema de persistencia
-    }*/
 }

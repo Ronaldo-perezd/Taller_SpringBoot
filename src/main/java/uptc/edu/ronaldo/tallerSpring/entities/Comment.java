@@ -11,6 +11,7 @@ public class Comment {
 
     private String content;
 
+    //Asociaciones uno a uno, Muchos a Muchos, uno a Muchos, etc.
     @ManyToOne
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;

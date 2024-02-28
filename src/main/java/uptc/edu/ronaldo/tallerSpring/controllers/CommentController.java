@@ -21,6 +21,12 @@ public class CommentController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<Comment>> getAllComments() {
+        List<Comment> comments = commentService.getAllComments();
+        return ResponseEntity.ok(comments);
+    }
+
     @GetMapping("/ticket/{ticketId}")
     public ResponseEntity<List<Comment>> getCommentsByTicketId(@PathVariable Long ticketId) {
         List<Comment> comments = commentService.readComments(ticketId);
@@ -32,6 +38,7 @@ public class CommentController {
         commentService.addComment(comment);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
